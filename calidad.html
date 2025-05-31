@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Termodinámica</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Bienvenidos</h1>
+  <p>Tu calculadora mágica de fisicoquímica y termodinámica 💜</p>
+
+  <h2>Calculadora de la Ley de los Gases Ideales</h2>
+  <form id="idealGasForm">
+    <label>Presión (P en atm): <input type="number" id="presion" step="any"></label><br>
+    <label>Volumen (V en L): <input type="number" id="volumen" step="any"></label><br>
+    <label>Mol (n): <input type="number" id="mol" step="any"></label><br>
+    <label>Temperatura (T en K): <input type="number" id="temperatura" step="any"></label><br>
+    <button type="button" onclick="calcular()">Calcular incógnita</button>
+  </form>
+  <div id="resultado"></div>
+
+  <h2>Calculadora de Energía Interna (Primera Ley de la Termodinámica)</h2>
+  <form id="energiaForm">
+    <label>Calor (Q en J): <input type="number" id="calor" step="any"></label><br>
+    <label>Trabajo (W en J): <input type="number" id="trabajo" step="any"></label><br>
+    <button type="button" onclick="calcularEnergia()">Calcular Energía Interna (ΔU)</button>
+  </form>
+  <div id="resultadoEnergia"></div>
+
+  <h2>Calculadora de Calor Sensible</h2>
+<form id="calorSensibleForm">
+  <label>Masa (m en g): <input type="number" id="masa" step="any"></label><br>
+  <label>Capacidad calorífica específica (c en J/g·K): <input type="number" id="capacidad" step="any"></label><br>
+  <label>Temperatura inicial (Ti en °C): <input type="number" id="tempInicial" step="any"></label><br>
+  <label>Temperatura final (Tf en °C): <input type="number" id="tempFinal" step="any"></label><br>
+  <button type="button" onclick="calcularCalorSensible()">Calcular q</button>
+</form>
+<div id="resultadoCalor"></div>
+<h2>Calculadora de Entalpía de Reacción</h2>
+<form id="entalpiaForm">
+  <label>Suma de entalpías de productos (kJ/mol): <input type="number" id="productos" step="any"></label><br>
+  <label>Suma de entalpías de reactivos (kJ/mol): <input type="number" id="reactivos" step="any"></label><br>
+  <button type="button" onclick="calcularEntalpia()">Calcular ΔH</button>
+</form>
+<div id="resultadoEntalpia"></div>
+<h2>Calculadora de Velocidad de Reacción</h2>
+<form id="cineticaForm">
+  <label>Constante de velocidad (k): <input type="number" id="constante" step="any"></label><br>
+  <label>Concentración de A [A] (mol/L): <input type="number" id="concentracionA" step="any"></label><br>
+  <label>Orden respecto a A (m): <input type="number" id="ordenA" step="any"></label><br>
+  <label>Concentración de B [B] (mol/L): <input type="number" id="concentracionB" step="any"></label><br>
+  <label>Orden respecto a B (n): <input type="number" id="ordenB" step="any"></label><br>
+  <button type="button" onclick="calcularVelocidad()">Calcular velocidad</button>
+</form>
+<div id="resultadoCinetica"></div>
+<h2>Calculadora de la Constante de Equilibrio (K<sub>c</sub>)</h2>
+<form id="equilibrioForm">
+  <label>Concentración del producto (mol/L): <input type="number" id="producto" step="any"></label><br>
+  <label>Exponente del producto (n): <input type="number" id="expProducto" step="any"></label><br>
+  <label>Concentración del reactivo (mol/L): <input type="number" id="reactivo" step="any"></label><br>
+  <label>Exponente del reactivo (m): <input type="number" id="expReactivo" step="any"></label><br>
+  <button type="button" onclick="calcularEquilibrio()">Calcular K<sub>c</sub></button>
+</form>
+<div id="resultadoEquilibrio"></div><h2>Calculadora de la Ley de Hess</h2>
+<p>Ingresa las entalpías de cada etapa (en kJ/mol) y sumaremos el total ✨</p>
+<form id="leyHessForm">
+  <label>ΔH₁: <input type="number" step="any" id="hess1"></label><br>
+  <label>ΔH₂: <input type="number" step="any" id="hess2"></label><br>
+  <label>ΔH₃: <input type="number" step="any" id="hess3"></label><br>
+  <button type="button" onclick="calcularLeyHess()">Calcular ΔH<sub>total</sub></button>
+</form>
+<div id="resultadoHess"></div>
+<h2>Velocidad de Reacción (Cinética Química)</h2>
+<p>Ingresa los datos para calcular la velocidad de una reacción con forma: <br>
+velocidad = k·[A]^m · [B]^n</p>
+<form id="velocidadForm">
+  <label>Constante de velocidad (k): <input type="number" step="any" id="constanteK"></label><br>
+  <label>Concentración [A] (mol/L): <input type="number" step="any" id="concentracionA"></label><br>
+  <label>Orden de reacción para A (m): <input type="number" step="any" id="ordenA"></label><br>
+  <label>Concentración [B] (mol/L): <input type="number" step="any" id="concentracionB"></label><br>
+  <label>Orden de reacción para B (n): <input type="number" step="any" id="ordenB"></label><br>
+  <button type="button" onclick="calcularVelocidad()">Calcular velocidad</button>
+</form>
+<div id="resultadoVelocidad"></div>
+<h2>Calculadora de Energía Libre de Gibbs</h2>
+<p>Usa ΔG = ΔH - TΔS (T en K, ΔH y ΔS en kJ/mol)</p>
+<form id="gibbsForm">
+  <label>ΔH (entalpía, kJ/mol): <input type="number" step="any" id="deltaH_gibbs"></label><br>
+  <label>ΔS (entropía, kJ/mol·K): <input type="number" step="any" id="deltaS"></label><br>
+  <label>T (temperatura en K): <input type="number" step="any" id="temperaturaGibbs"></label><br>
+  <button type="button" onclick="calcularGibbs()">Calcular ΔG</button>
+</form>
+<div id="resultadoGibbs"></div>
+<h2>Calculadora de Entropía (ΔS)</h2>
+<form id="entropyForm">
+  <label>Calor (Q en J): <input type="number" id="calorInput" step="any" required></label><br>
+  <label>Temperatura (T en K): <input type="number" id="tempInput" step="any" required></label><br>
+  <button type="button" onclick="calcularEntropia()">Calcular ΔS</button>
+</form>
+<div id="resultadoEntropia"></div>
+<h2>Calculadora Ley de Raoult (Presión de Vapor)</h2>
+<form id="raoultForm">
+  <label>Fracción molar del solvente (X): <input type="number" id="fraccionSolvente" step="any" min="0" max="1" required></label><br>
+  <label>Presión de vapor del solvente puro (P₀ en atm): <input type="number" id="presionSolventePuro" step="any" min="0" required></label><br>
+  <button type="button" onclick="calcularRaoult()">Calcular presión de vapor</button>
+</form>
+<div id="resultadoRaoult"></div>
+<h2>Calculadora Ley de Henry (Gases disueltos)</h2>
+<form id="henryForm">
+  <label>Constante de Henry (kH en mol/(L·atm)): <input type="number" id="constanteHenry" step="any" min="0" required></label><br>
+  <label>Presión parcial del gas (P en atm): <input type="number" id="presionGas" step="any" min="0" required></label><br>
+  <button type="button" onclick="calcularHenry()">Calcular concentración</button>
+</form>
+<div id="resultadoHenry"></div>
+<h2>Calculadora Ley de Arrhenius</h2>
+<form id="arrheniusForm">
+  <label>Factor pre-exponencial (A): <input type="number" id="factorA" step="any" min="0" required></label><br>
+  <label>Energía de activación (Ea en J/mol): <input type="number" id="energiaEa" step="any" min="0" required></label><br>
+  <label>Temperatura (T en K): <input type="number" id="tempArrhenius" step="any" min="0" required></label><br>
+  <button type="button" onclick="calcularArrhenius()">Calcular k</button>
+</form>
+<div id="resultadoArrhenius"></div>
+<h2>Calculadora Equilibrio Ácido-Base</h2>
+<form id="equilibrioForm">
+  <label>Constante (Ka o Kb): <input type="number" id="constanteAcidoBase" step="any" min="0" required></label><br>
+  <select id="tipoConstante">
+    <option value="Ka">Ka (ácido)</option>
+    <option value="Kb">Kb (base)</option>
+  </select><br>
+  <button type="button" onclick="calcularEquilibrio()">Calcular pKa, pKb y constante complementaria</button>
+</form>
+<div id="resultadoEquilibrio"></div>
+<h2>Calculadora de pH y pOH</h2>
+<p>Ingresa la concentración de iones (mol/L)</p>
+<form id="phForm">
+  <label>[H⁺]: <input type="number" step="any" id="Hplus"></label><br>
+  <label>[OH⁻]: <input type="number" step="any" id="OHminus"></label><br>
+  <button type="button" onclick="calcularPH()">Calcular</button>
+<h2>Conversor de Presión</h2>
+<form id="pressureForm">
+  <label>Presión: <input type="number" id="presionInput" step="any"></label>
+  <select id="unidadPresion">
+    <option value="atm">atm</option>
+    <option value="Pa">Pa</option>
+    <option value="mmHg">mmHg</option>
+    <option value="bar">bar</option>
+  </select>
+  <button type="button" onclick="convertirPresion()">Convertir</button>
+</form>
+<div id="resultadoPresion"></div>
+<h2>Conversor de Temperatura</h2>
+<form id="tempForm">
+  <label>Temperatura: <input type="number" id="tempInput" step="any"></label>
+  <select id="tempUnidad">
+    <option value="C">°C</option>
+    <option value="K">K</option>
+    <option value="F">°F</option>
+  </select>
+  <button type="button" onclick="convertirTemperatura()">Convertir</button>
+</form>
+<div id="resultadoTemperatura"></div>
+<h2>Conversor de Masa</h2>
+<form id="massForm" onsubmit="event.preventDefault(); convertirMasa();">
+  <label>
+    Masa: 
+    <input type="number" id="masaInput" step="any" placeholder="Ingresa valor" required>
+  </label>
+  <select id="unidadMasa">
+    <option value="g">gramos (g)</option>
+    <option value="kg">kilogramos (kg)</option>
+    <option value="mg">miligramos (mg)</option>
+    <option value="ton">toneladas (t)</option>
+  </select>
+  <button type="submit">Convertir</button>
+</form>
+<div id="resultadoMasa" style="margin-top: 1em; font-weight: bold;"></div>
+<h2>Conversor de Longitud</h2>
+<form id="lengthForm" onsubmit="event.preventDefault(); convertirLongitud();">
+  <label>
+    Longitud: 
+    <input type="number" id="longitudInput" step="any" placeholder="Ingresa valor" required>
+  </label>
+  <select id="unidadLongitud">
+    <option value="mm">milímetros (mm)</option>
+    <option value="cm">centímetros (cm)</option>
+    <option value="m">metros (m)</option>
+    <option value="km">kilómetros (km)</option>
+  </select>
+  <button type="submit">Convertir</button>
+</form>
+<div id="resultadoLongitud" style="margin-top: 1em; font-weight: bold;"></div>
+<h2>Conversor de Fuerza</h2>
+<form id="fuerzaForm" onsubmit="event.preventDefault(); convertirFuerza();">
+  <label>
+    Fuerza: 
+    <input type="number" id="fuerzaInput" step="any" placeholder="Ingresa valor" required>
+  </label>
+  <select id="unidadFuerza">
+    <option value="N">Newton (N)</option>
+    <option value="dyn">Dyne (dyn)</option>
+    <option value="kgf">Kilogramo-fuerza (kgf)</option>
+    <option value="lbf">Libra-fuerza (lbf)</option>
+  </select>
+  <button type="submit">Convertir</button>
+</form>
+<div id="resultadoFuerza" style="margin-top: 1em; font-weight: bold;"></div>
+<h2>Conversor de Energía</h2>
+<form id="energiaForm" onsubmit="event.preventDefault(); convertirEnergia();">
+  <label>
+    Energía:
+    <input type="number" id="energiaInput" step="any" placeholder="Ingresa valor" required>
+  </label>
+  <select id="unidadEnergia">
+    <option value="J">Joule (J)</option>
+    <option value="kJ">Kilojoule (kJ)</option>
+    <option value="cal">Caloría (cal)</option>
+    <option value="kcal">Kilocaloría (kcal)</option>
+    <option value="BTU">BTU</option>
+    <option value="eV">eV (electrón-voltio)</option>
+  </select>
+  <button type="submit">Convertir</button>
+</form>
+<div id="resultadoEnergia" style="margin-top: 1em; font-weight: bold;"></div>
+<h2>Conversor de Moles</h2>
+<form id="molForm" onsubmit="event.preventDefault(); convertirMoles();">
+  <label>
+    Cantidad:
+    <input type="number" id="molInput" step="any" placeholder="Ingresa cantidad" required>
+  </label>
+  <select id="unidadMol">
+    <option value="mol">Mol (mol)</option>
+    <option value="mmol">Milimol (mmol)</option>
+    <option value="umol">Micromol (µmol)</option>
+    <option value="nmol">Nanomol (nmol)</option>
+    <option value="particulas">Número de partículas</option>
+  </select>
+  <button type="submit">Convertir</button>
+</form>
+<div id="resultadoMol" style="margin-top: 1em; font-weight: bold;"></div>
+<h2>Conversor de Volumen</h2>
+<form id="volumenForm" onsubmit="event.preventDefault(); convertirVolumen();">
+  <label>
+    Volumen:
+    <input type="number" id="volumenInput" step="any" placeholder="Ingresa volumen" required>
+  </label>
+  <select id="unidadVolumen">
+    <option value="L">Litros (L)</option>
+    <option value="mL">Mililitros (mL)</option>
+    <option value="cm3">Centímetros cúbicos (cm³)</option>
+    <option value="m3">Metros cúbicos (m³)</option>
+    <option value="ft3">Pies cúbicos (ft³)</option>
+    <option value="gal">Galones (US gal)</option>
+  </select>
+  <button type="submit">Convertir</button>
+</form>
+<div id="resultadoVolumen" style="margin-top: 1em; font-weight: bold;"></div>
+<h2>Conversor de Potencia</h2>
+<form id="potenciaForm" onsubmit="event.preventDefault(); convertirPotencia();">
+  <label>
+    Potencia:
+    <input type="number" id="potenciaInput" step="any" placeholder="Ingresa potencia" required>
+  </label>
+  <select id="unidadPotencia">
+    <option value="W">Watts (W)</option>
+    <option value="kW">Kilowatts (kW)</option>
+    <option value="hp">Caballos de fuerza (hp)</option>
+    <option value="cal_s">Calorías/segundo (cal/s)</option>
+    <option value="BTU_h">BTU/hora (BTU/h)</option>
+  </select>
+  <button type="submit">Convertir</button>
+</form>
+<div id="resultadoPotencia" style="margin-top: 1em; font-weight: bold;"></div>
+<h2>Conversor Gravitacional</h2>
+<form id="gravedadForm" onsubmit="event.preventDefault(); convertirGravedad();">
+  <label>Masa (kg) o Peso (N):
+    <input type="number" id="valorGravedad" step="any" placeholder="Ingresa valor">
+  </label>
+
+  <select id="tipoConversion">
+    <option value="masa">Masa → Peso</option>
+    <option value="peso">Peso → Masa</option>
+  </select>
+
+  <label>Planeta:
+    <select id="planetaSeleccionado">
+      <option value="tierra">🌍 Tierra</option>
+      <option value="luna">🌕 Luna</option>
+      <option value="marte">🔴 Marte</option>
+      <option value="jupiter">🟠 Júpiter</option>
+    </select>
+  </label>
+
+  <button type="submit">Calcular</button>
+</form>
+
+<div id="resultadoGravedad" style="margin-top: 1em; font-weight: bold;"></div>
+<h2>Conversor de Densidad</h2>
+<form>
+  <label>Valor: <input type="number" id="densidadValor" step="any" required></label><br>
+  <label>Unidad origen:
+    <select id="densidadOrigen">
+      <option value="g/cm3">g/cm³</option>
+      <option value="kg/m3">kg/m³</option>
+      <option value="lb/gal">lb/gal</option>
+    </select>
+  </label><br>
+  <label>Unidad destino:
+    <select id="densidadDestino">
+      <option value="g/cm3">g/cm³</option>
+      <option value="kg/m3">kg/m³</option>
+      <option value="lb/gal">lb/gal</option>
+    </select>
+  </label><br>
+  <button type="button" onclick="convertirDensidad()">Convertir</button>
+</form>
+<div id="resultadoDensidad"></div>
+<h2>Conversor de Viscosidad</h2>
+<form>
+  <label>Valor: <input type="number" id="viscoValor" step="any" required></label><br>
+  <label>Unidad origen:
+    <select id="viscoOrigen">
+      <option value="Pa·s">Pa·s</option>
+      <option value="cP">cP</option>
+    </select>
+  </label><br>
+  <label>Unidad destino:
+    <select id="viscoDestino">
+      <option value="Pa·s">Pa·s</option>
+      <option value="cP">cP</option>
+    </select>
+  </label><br>
+  <button type="button" onclick="convertirViscosidad()">Convertir</button>
+</form>
+<div id="resultadoViscosidad"></div>
+<h2>Conversor de Concentración</h2>
+<form>
+  <label>Valor: <input type="number" id="concValor" step="any" required></label><br>
+  <label>Unidad origen:
+    <select id="concOrigen">
+      <option value="mol/L">mol/L</option>
+      <option value="%masa">% masa</option>
+      <option value="ppm">ppm</option>
+    </select>
+  </label><br>
+  <label>Unidad destino:
+    <select id="concDestino">
+      <option value="mol/L">mol/L</option>
+      <option value="%masa">% masa</option>
+      <option value="ppm">ppm</option>
+    </select>
+  </label><br>
+  <button type="button" onclick="convertirConcentracion()">Convertir</button>
+</form>
+<div id="resultadoConcentracion"></div>
+<h2>Conversor de Frecuencia</h2>
+<form>
+  <label>Valor: <input type="number" id="frecValor" step="any" required></label><br>
+  <label>Unidad origen:
+    <select id="frecOrigen">
+      <option value="Hz">Hz</option>
+      <option value="kHz">kHz</option>
+      <option value="rad/s">rad/s</option>
+    </select>
+  </label><br>
+  <label>Unidad destino:
+    <select id="frecDestino">
+      <option value="Hz">Hz</option>
+      <option value="kHz">kHz</option>
+      <option value="rad/s">rad/s</option>
+    </select>
+  </label><br>
+  <button type="button" onclick="convertirFrecuencia()">Convertir</button>
+</form>
+<div id="resultadoFrecuencia"></div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tabla Periódica Interactiva</title>
+  <link rel="stylesheet" href="styles.css" />
+
+
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tabla Periódica </title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <h1>Tabla Periódica </h1>
+
+  <table class="tabla-periodica">
+    <thead>
+      <tr>
+        <thead>
+  <tr>
+    <th>#</th>
+    <th>Elemento</th>
+    <th>Símbolo</th>
+    <th>Masa Molar (g/mol)</th>
+    <th>Grupo</th>
+  </tr>
+</thead>
+<tbody>
+  <tr class="no-metal" onclick="mostrarModal('Hidrógeno', 'H', 1.008, 'No metal')">
+    <td>1</td>
+    <td>Hidrógeno</td>
+    <td>H</td>
+    <td>1.008</td>
+    <td>No metal</td>
+  </tr>
+  <tr class="alcalino" onclick="mostrarModal('Litio', 'Li', 6.94, 'Metal alcalino')">
+    <td>3</td>
+    <td>Litio</td>
+    <td>Li</td>
+    <td>6.94</td>
+    <td>Metal alcalino</td>
+  </tr>
+  <tr class="alcalinoterreo" onclick="mostrarModal('Berilio', 'Be', 9.0122, 'Metal alcalinotérreo')">
+    <td>4</td>
+    <td>Berilio</td>
+    <td>Be</td>
+    <td>9.0122</td>
+    <td>Metal alcalinotérreo</td>
+  </tr>
+  <tr class="metaloide" onclick="mostrarModal('Boro', 'B', 10.81, 'Metaloide')">
+    <td>5</td>
+    <td>Boro</td>
+    <td>B</td>
+    <td>10.81</td>
+    <td>Metaloide</td>
+  </tr>
+  <tr class="no-metal" onclick="mostrarModal('Carbono', 'C', 12.011, 'No metal')">
+    <td>6</td>
+    <td>Carbono</td>
+    <td>C</td>
+    <td>12.011</td>
+    <td>No metal</td>
+  </tr>
+  <tr class="no-metal" onclick="mostrarModal('Hidrógeno', 'H', 1.008, 'No metal')">
+    <td>1</td>
+    <td>Hidrógeno</td>
+    <td>H</td>
+    <td>1.008</td>
+    <td>No metal</td>
+  </tr>
+  <tr class="alcalino" onclick="mostrarModal('Litio', 'Li', 6.94, 'Metal alcalino')">
+    <td>3</td>
+    <td>Litio</td>
+    <td>Li</td>
+    <td>6.94</td>
+    <td>Metal alcalino</td>
+  </tr>
+  <tr class="alcalinoterreo" onclick="mostrarModal('Berilio', 'Be', 9.0122, 'Metal alcalinotérreo')">
+    <td>4</td>
+    <td>Berilio</td>
+    <td>Be</td>
+    <td>9.0122</td>
+    <td>Metal alcalinotérreo</td>
+  </tr>
+  <tr class="metaloide" onclick="mostrarModal('Boro', 'B', 10.81, 'Metaloide')">
+    <td>5</td>
+    <td>Boro</td>
+    <td>B</td>
+    <td>10.81</td>
+    <td>Metaloide</td>
+  </tr>
+  <tr class="no-metal" onclick="mostrarModal('Carbono', 'C', 12.011, 'No metal')">
+    <td>6</td>
+    <td>Carbono</td>
+    <td>C</td>
+    <td>12.011</td>
+    <td>No metal</td>
+  </tr>
+  <tr class="no-metal" onclick="mostrarModal('Nitrógeno', 'N', 14.007, 'No metal')">
+    <td>7</td>
+    <td>Nitrógeno</td>
+    <td>N</td>
+    <td>14.007</td>
+    <td>No metal</td>
+  </tr>
+  <tr class="no-metal" onclick="mostrarModal('Oxígeno', 'O', 15.999, 'No metal')">
+    <td>8</td>
+    <td>Oxígeno</td>
+    <td>O</td>
+    <td>15.999</td>
+    <td>No metal</td>
+  </tr>
+  <tr class="halogeno" onclick="mostrarModal('Flúor', 'F', 18.998, 'Halógeno')">
+    <td>9</td>
+    <td>Flúor</td>
+    <td>F</td>
+    <td>18.998</td>
+    <td>Halógeno</td>
+  </tr>
+  <tr class="gas-noble" onclick="mostrarModal('Neón', 'Ne', 20.180, 'Gas noble')">
+    <td>10</td>
+    <td>Neón</td>
+    <td>Ne</td>
+    <td>20.180</td>
+    <td>Gas noble</td>
+  </tr>
+  <tr class="alcalino" onclick="mostrarModal('Sodio', 'Na', 22.990, 'Metal alcalino')">
+    <td>11</td>
+    <td>Sodio</td>
+    <td>Na</td>
+    <td>22.990</td>
+    <td>Metal alcalino</td>
+  </tr>
+  <tr class="alcalinoterreo" onclick="mostrarModal('Magnesio', 'Mg', 24.305, 'Metal alcalinotérreo')">
+    <td>12</td>
+    <td>Magnesio</td>
+    <td>Mg</td>
+    <td>24.305</td>
+    <td>Metal alcalinotérreo</td>
+  </tr>
+  <tr class="metal-post-transicion" onclick="mostrarModal('Aluminio', 'Al', 26.982, 'Metal post-transicional')">
+    <td>13</td>
+    <td>Aluminio</td>
+    <td>Al</td>
+    <td>26.982</td>
+    <td>Metal post-transicional</td>
+  </tr>
+  <tr class="metaloide" onclick="mostrarModal('Silicio', 'Si', 28.085, 'Metaloide')">
+    <td>14</td>
+    <td>Silicio</td>
+    <td>Si</td>
+    <td>28.085</td>
+    <td>Metaloide</td>
+  </tr>
+  <tr class="no-metal" onclick="mostrarModal('Fósforo', 'P', 30.974, 'No metal')">
+    <td>15</td>
+    <td>Fósforo</td>
+    <td>P</td>
+    <td>30.974</td>
+    <td>No metal</td>
+  </tr>
+  <tr class="no-metal" onclick="mostrarModal('Azufre', 'S', 32.06, 'No metal')">
+    <td>16</td>
+    <td>Azufre</td>
+    <td>S</td>
+    <td>32.06</td>
+    <td>No metal</td>
+  </tr>
+  <tr class="halogeno" onclick="mostrarModal('Cloro', 'Cl', 35.45, 'Halógeno')">
+    <td>17</td>
+    <td>Cloro</td>
+    <td>Cl</td>
+    <td>35.45</td>
+    <td>Halógeno</td>
+  </tr>
+  <tr class="gas-noble" onclick="mostrarModal('Argón', 'Ar', 39.948, 'Gas noble')">
+    <td>18</td>
+    <td>Argón</td>
+    <td>Ar</td>
+    <td>39.948</td>
+    <td>Gas noble</td>
+  </tr>
+  <tr class="alcalino" onclick="mostrarModal('Potasio', 'K', 39.098, 'Metal alcalino')">
+    <td>19</td>
+    <td>Potasio</td>
+    <td>K</td>
+    <td>39.098</td>
+    <td>Metal alcalino</td>
+  </tr>
+  <tr class="alcalinoterreo" onclick="mostrarModal('Calcio', 'Ca', 40.078, 'Metal alcalinotérreo')">
+    <td>20</td>
+    <td>Calcio</td>
+    <td>Ca</td>
+    <td>40.078</td>
+    <td>Metal alcalinotérreo</td>
+  </tr>
+  <tr class="metal-post-transicion" onclick="mostrarModal('Escandio', 'Sc', 44.956, 'Metal de transición')">
+    <td>21</td>
+    <td>Escandio</td>
+    <td>Sc</td>
+    <td>44.956</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Titanio', 'Ti', 47.867, 'Metal de transición')">
+    <td>22</td>
+    <td>Titanio</td>
+    <td>Ti</td>
+    <td>47.867</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Vanadio', 'V', 50.942, 'Metal de transición')">
+    <td>23</td>
+    <td>Vanadio</td>
+    <td>V</td>
+    <td>50.942</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Cromo', 'Cr', 51.996, 'Metal de transición')">
+    <td>24</td>
+    <td>Cromo</td>
+    <td>Cr</td>
+    <td>51.996</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Manganeso', 'Mn', 54.938, 'Metal de transición')">
+    <td>25</td>
+    <td>Manganeso</td>
+    <td>Mn</td>
+    <td>54.938</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Hierro', 'Fe', 55.845, 'Metal de transición')">
+    <td>26</td>
+    <td>Hierro</td>
+    <td>Fe</td>
+    <td>55.845</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Cobalto', 'Co', 58.933, 'Metal de transición')">
+    <td>27</td>
+    <td>Cobalto</td>
+    <td>Co</td>
+    <td>58.933</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Níquel', 'Ni', 58.693, 'Metal de transición')">
+    <td>28</td>
+    <td>Níquel</td>
+    <td>Ni</td>
+    <td>58.693</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Cobre', 'Cu', 63.546, 'Metal de transición')">
+    <td>29</td>
+    <td>Cobre</td>
+    <td>Cu</td>
+    <td>63.546</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Cinc', 'Zn', 65.38, 'Metal de transición')">
+    <td>30</td>
+    <td>Cinc</td>
+    <td>Zn</td>
+    <td>65.38</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-post-transicion" onclick="mostrarModal('Galio', 'Ga', 69.723, 'Metal post-transicional')">
+    <td>31</td>
+    <td>Galio</td>
+    <td>Ga</td>
+    <td>69.723</td>
+    <td>Metal post-transicional</td>
+  </tr>
+  <tr class="metaloide" onclick="mostrarModal('Germanio', 'Ge', 72.63, 'Metaloide')">
+    <td>32</td>
+    <td>Germanio</td>
+    <td>Ge</td>
+    <td>72.63</td>
+    <td>Metaloide</td>
+  </tr>
+  <tr class="no-metal" onclick="mostrarModal('Arsénico', 'As', 74.922, 'Metaloide')">
+    <td>33</td>
+    <td>Arsénico</td>
+    <td>As</td>
+    <td>74.922</td>
+    <td>Metaloide</td>
+  </tr>
+  <tr class="no-metal" onclick="mostrarModal('Selenio', 'Se', 78.971, 'No metal')">
+    <td>34</td>
+    <td>Selenio</td>
+    <td>Se</td>
+    <td>78.971</td>
+    <td>No metal</td>
+  </tr>
+  <tr class="halogeno" onclick="mostrarModal('Bromo', 'Br', 79.904, 'Halógeno')">
+    <td>35</td>
+    <td>Bromo</td>
+    <td>Br</td>
+    <td>79.904</td>
+    <td>Halógeno</td>
+  </tr>
+  <tr class="gas-noble" onclick="mostrarModal('Kriptón', 'Kr', 83.798, 'Gas noble')">
+    <td>36</td>
+    <td>Kriptón</td>
+    <td>Kr</td>
+    <td>83.798</td>
+    <td>Gas noble</td>
+  </tr>
+  <tr class="alcalino" onclick="mostrarModal('Rubidio', 'Rb', 85.468, 'Metal alcalino')">
+    <td>37</td>
+    <td>Rubidio</td>
+    <td>Rb</td>
+    <td>85.468</td>
+    <td>Metal alcalino</td>
+  </tr>
+  <tr class="alcalinoterreo" onclick="mostrarModal('Estroncio', 'Sr', 87.62, 'Metal alcalinotérreo')">
+    <td>38</td>
+    <td>Estroncio</td>
+    <td>Sr</td>
+    <td>87.62</td>
+    <td>Metal alcalinotérreo</td>
+  </tr>
+  <tr class="metal-post-transicion" onclick="mostrarModal('Itrio', 'Y', 88.906, 'Metal de transición')">
+    <td>39</td>
+    <td>Itrio</td>
+    <td>Y</td>
+    <td>88.906</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Circonio', 'Zr', 91.224, 'Metal de transición')">
+    <td>40</td>
+    <td>Circonio</td>
+    <td>Zr</td>
+    <td>91.224</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Niobio', 'Nb', 92.906, 'Metal de transición')">
+    <td>41</td>
+    <td>Niobio</td>
+    <td>Nb</td>
+    <td>92.906</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Molibdeno', 'Mo', 95.95, 'Metal de transición')">
+    <td>42</td>
+    <td>Molibdeno</td>
+    <td>Mo</td>
+    <td>95.95</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Tecnecio', 'Tc', 98, 'Metal de transición')">
+    <td>43</td>
+    <td>Tecnecio</td>
+    <td>Tc</td>
+    <td>98</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Rutenio', 'Ru', 101.07, 'Metal de transición')">
+    <td>44</td>
+    <td>Rutenio</td>
+    <td>Ru</td>
+    <td>101.07</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Rodio', 'Rh', 102.91, 'Metal de transición')">
+    <td>45</td>
+    <td>Rodio</td>
+    <td>Rh</td>
+    <td>102.91</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Paladio', 'Pd', 106.42, 'Metal de transición')">
+    <td>46</td>
+    <td>Paladio</td>
+    <td>Pd</td>
+    <td>106.42</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Plata', 'Ag', 107.87, 'Metal de transición')">
+    <td>47</td>
+    <td>Plata</td>
+    <td>Ag</td>
+    <td>107.87</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Cadmio', 'Cd', 112.41, 'Metal de transición')">
+    <td>48</td>
+    <td>Cadmio</td>
+    <td>Cd</td>
+    <td>112.41</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-post-transicion" onclick="mostrarModal('Indio', 'In', 114.82, 'Metal post-transicional')">
+    <td>49</td>
+    <td>Indio</td>
+    <td>In</td>
+    <td>114.82</td>
+    <td>Metal post-transicional</td>
+  </tr>
+  <tr class="metal-post-transicion" onclick="mostrarModal('Estaño', 'Sn', 118.71, 'Metal post-transicional')">
+    <td>50</td>
+    <td>Estaño</td>
+    <td>Sn</td>
+    <td>118.71</td>
+    <td>Metal post-transicional</td>
+  </tr>
+  <tr class="metal-post-transicion" onclick="mostrarModal('Antimonio', 'Sb', 121.76, 'Metaloide')">
+    <td>51</td>
+    <td>Antimonio</td>
+    <td>Sb</td>
+    <td>121.76</td>
+    <td>Metaloide</td>
+  </tr>
+  <tr class="metaloide" onclick="mostrarModal('Telurio', 'Te', 127.60, 'Metaloide')">
+    <td>52</td>
+    <td>Telurio</td>
+    <td>Te</td>
+    <td>127.60</td>
+    <td>Metaloide</td>
+  </tr>
+  <tr class="no-metal" onclick="mostrarModal('Yodo', 'I', 126.90, 'Halógeno')">
+    <td>53</td>
+    <td>Yodo</td>
+    <td>I</td>
+    <td>126.90</td>
+    <td>Halógeno</td>
+  </tr>
+  <tr class="gas-noble" onclick="mostrarModal('Xenón', 'Xe', 131.29, 'Gas noble')">
+    <td>54</td>
+    <td>Xenón</td>
+    <td>Xe</td>
+    <td>131.29</td>
+    <td>Gas noble</td>
+  </tr>
+  <tr class="alcalino" onclick="mostrarModal('Cesio', 'Cs', 132.91, 'Metal alcalino')">
+    <td>55</td>
+    <td>Cesio</td>
+    <td>Cs</td>
+    <td>132.91</td>
+    <td>Metal alcalino</td>
+  </tr>
+  <tr class="alcalinoterreo" onclick="mostrarModal('Bario', 'Ba', 137.33, 'Metal alcalinotérreo')">
+    <td>56</td>
+    <td>Bario</td>
+    <td>Ba</td>
+    <td>137.33</td>
+    <td>Metal alcalinotérreo</td>
+  </tr>
+  <tr class="lantanido" onclick="mostrarModal('Lantano', 'La', 138.91, 'Lantánido')">
+    <td>57</td>
+    <td>Lantano</td>
+    <td>La</td>
+    <td>138.91</td>
+    <td>Lantánido</td>
+  </tr>
+  <tr class="lantanido" onclick="mostrarModal('Cerio', 'Ce', 140.12, 'Lantánido')">
+    <td>58</td>
+    <td>Cerio</td>
+    <td>Ce</td>
+    <td>140.12</td>
+    <td>Lantánido</td>
+  </tr>
+  <tr class="lantanido" onclick="mostrarModal('Praseodimio', 'Pr', 140.91, 'Lantánido')">
+    <td>59</td>
+    <td>Praseodimio</td>
+    <td>Pr</td>
+    <td>140.91</td>
+    <td>Lantánido</td>
+  </tr>
+  <tr class="lantanido" onclick="mostrarModal('Neodimio', 'Nd', 144.24, 'Lantánido')">
+    <td>60</td>
+    <td>Neodimio</td>
+    <td>Nd</td>
+    <td>144.24</td>
+    <td>Lantánido</td>
+  </tr>
+  <tr class="lantanido" onclick="mostrarModal('Prometio', 'Pm', 145, 'Lantánido')">
+    <td>61</td>
+    <td>Prometio</td>
+    <td>Pm</td>
+    <td>145</td>
+    <td>Lantánido</td>
+  </tr>
+  <tr class="lantanido" onclick="mostrarModal('Samario', 'Sm', 150.36, 'Lantánido')">
+    <td>62</td>
+    <td>Samario</td>
+    <td>Sm</td>
+    <td>150.36</td>
+    <td>Lantánido</td>
+  </tr>
+  <tr class="lantanido" onclick="mostrarModal('Europio', 'Eu', 151.96, 'Lantánido')">
+    <td>63</td>
+    <td>Europio</td>
+    <td>Eu</td>
+    <td>151.96</td>
+    <td>Lantánido</td>
+  </tr>
+  <tr class="lantanido" onclick="mostrarModal('Gadolinio', 'Gd', 157.25, 'Lantánido')">
+    <td>64</td>
+    <td>Gadolinio</td>
+    <td>Gd</td>
+    <td>157.25</td>
+    <td>Lantánido</td>
+  </tr>
+  <tr class="lantanido" onclick="mostrarModal('Terbio', 'Tb', 158.93, 'Lantánido')">
+    <td>65</td>
+    <td>Terbio</td>
+    <td>Tb</td>
+    <td>158.93</td>
+    <td>Lantánido</td>
+  </tr>
+  <tr class="lantanido" onclick="mostrarModal('Disprosio', 'Dy', 162.50, 'Lantánido')">
+    <td>66</td>
+    <td>Disprosio</td>
+    <td>Dy</td>
+    <td>162.50</td>
+    <td>Lantánido</td>
+  </tr>
+  <tr class="lantanido" onclick="mostrarModal('Holmio', 'Ho', 164.93, 'Lantánido')">
+    <td>67</td>
+    <td>Holmio</td>
+    <td>Ho</td>
+    <td>164.93</td>
+    <td>Lantánido</td>
+  </tr>
+  <tr class="lantanido" onclick="mostrarModal('Erbio', 'Er', 167.26, 'Lantánido')">
+    <td>68</td>
+    <td>Erbio</td>
+    <td>Er</td>
+    <td>167.26</td>
+    <td>Lantánido</td>
+  </tr>
+  <tr class="lantanido" onclick="mostrarModal('Tulio', 'Tm', 168.93, 'Lantánido')">
+    <td>69</td>
+    <td>Tulio</td>
+    <td>Tm</td>
+    <td>168.93</td>
+    <td>Lantánido</td>
+  </tr>
+  <tr class="lantanido" onclick="mostrarModal('Iterbio', 'Yb', 173.05, 'Lantánido')">
+    <td>70</td>
+    <td>Iterbio</td>
+    <td>Yb</td>
+    <td>173.05</td>
+    <td>Lantánido</td>
+  </tr>
+  <tr class="lantanido" onclick="mostrarModal('Lutecio', 'Lu', 174.97, 'Lantánido')">
+    <td>71</td>
+    <td>Lutecio</td>
+    <td>Lu</td>
+    <td>174.97</td>
+    <td>Lantánido</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Hafnio', 'Hf', 178.49, 'Metal de transición')">
+    <td>72</td>
+    <td>Hafnio</td>
+    <td>Hf</td>
+    <td>178.49</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Tantalio', 'Ta', 180.95, 'Metal de transición')">
+    <td>73</td>
+    <td>Tantalio</td>
+    <td>Ta</td>
+    <td>180.95</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Wolframio', 'W', 183.84, 'Metal de transición')">
+    <td>74</td>
+    <td>Wolframio</td>
+    <td>W</td>
+    <td>183.84</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Renio', 'Re', 186.21, 'Metal de transición')">
+    <td>75</td>
+    <td>Renio</td>
+    <td>Re</td>
+    <td>186.21</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Osmio', 'Os', 190.23, 'Metal de transición')">
+    <td>76</td>
+    <td>Osmio</td>
+    <td>Os</td>
+    <td>190.23</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Iridio', 'Ir', 192.22, 'Metal de transición')">
+    <td>77</td>
+    <td>Iridio</td>
+    <td>Ir</td>
+    <td>192.22</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Platino', 'Pt', 195.08, 'Metal de transición')">
+    <td>78</td>
+    <td>Platino</td>
+    <td>Pt</td>
+    <td>195.08</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-de-transicion" onclick="mostrarModal('Oro', 'Au', 196.97, 'Metal de transición')">
+    <td>79</td>
+    <td>Oro</td>
+    <td>Au</td>
+    <td>196.97</td>
+    <td>Metal de transición</td>
+  </tr>
+  <tr class="metal-post-transicion" onclick="mostrarModal('Mercurio', 'Hg', 200.59, 'Metal post-transicional')">
+    <td>80</td>
+    <td>Mercurio</td>
+    <td>Hg</td>
+    <td>200.59</td>
+    <td>Metal post-transicional</td>
+  </tr>
+  <tr class="metal-post-transicion" onclick="mostrarModal('Talio', 'Tl', 204.38, 'Metal post-transicional')">
+    <td>81</td>
+    <td>Talio</td>
+    <td>Tl</td>
+    <td>204.38</td>
+    <td>Metal post-transicional</td>
+  </tr>
+  <tr class="metal-post-transicion" onclick="mostrarModal('Plomo', 'Pb', 207.2, 'Metal post-transicional')">
+    <td>82</td>
+    <td>Plomo</td>
+    <td>Pb</td>
+    <td>207.2</td>
+    <td>Metal post-transicional</td>
+  </tr>
+  <tr class="metal-post-transicion" onclick="mostrarModal('Bismuto', 'Bi', 208.98, 'Metal post-transicional')">
+    <td>83</td>
+    <td>Bismuto</td>
+    <td>Bi</td>
+    <td>208.98</td>
+    <td>Metal post-transicional</td>
+  </tr>
+  <tr class="metal-post-transicion" onclick="mostrarModal('Polonio', 'Po', 209, 'Metal post-transicional')">
+    <td>84</td>
+    <td>Polonio</td>
+    <td>Po</td>
+    <td>209</td>
+    <td>Metal post-transicional</td>
+  </tr>
+  <tr class="metal-post-transicion" onclick="mostrarModal('Astato', 'At', 210, 'Halógeno')">
+    <td>85</td>
+    <td>Astato</td>
+    <td>At</td>
+    <td>210</td>
+    <td>Halógeno</td>
+  </tr>
+  <tr class="halogeno" onclick="mostrarModal('Francio', 'Fr', 223, 'Metal alcalino')">
+    <td>87</td>
+    <td>Francio</td>
+    <td>Fr</td>
+    <td>223</td>
+    <td>Metal alcalino</td>
+  </tr>
+  <tr class="metal-alcalino-tierra" onclick="mostrarModal('Radio', 'Ra', 226, 'Metal alcalinotérreo')">
+    <td>88</td>
+    <td>Radio</td>
+    <td>Ra</td>
+    <td>226</td>
+    <td>Metal alcalinotérreo</td>
+  </tr>
+
+  <!-- Actínidos -->
+  <tr class="actinido" onclick="mostrarModal('Actinio', 'Ac', 227, 'Actínido')">
+    <td>89</td>
+    <td>Actinio</td>
+    <td>Ac</td>
+    <td>227</td>
+    <td>Actínido</td>
+  </tr>
+  <tr class="actinido" onclick="mostrarModal('Torio', 'Th', 232.04, 'Actínido')">
+    <td>90</td>
+    <td>Torio</td>
+    <td>Th</td>
+    <td>232.04</td>
+    <td>Actínido</td>
+  </tr>
+  <tr class="actinido" onclick="mostrarModal('Protactinio', 'Pa', 231.04, 'Actínido')">
+    <td>91</td>
+    <td>Protactinio</td>
+    <td>Pa</td>
+    <td>231.04</td>
+    <td>Actínido</td>
+  </tr>
+  <tr class="actinido" onclick="mostrarModal('Uranio', 'U', 238.03, 'Actínido')">
+    <td>92</td>
+    <td>Uranio</td>
+    <td>U</td>
+    <td>238.03</td>
+    <td>Actínido</td>
+  </tr>
+  <tr class="actinido" onclick="mostrarModal('Neptunio', 'Np', 237, 'Actínido')">
+    <td>93</td>
+    <td>Neptunio</td>
+    <td>Np</td>
+    <td>237</td>
+    <td>Actínido</td>
+  </tr>
+  <tr class="actinido" onclick="mostrarModal('Plutonio', 'Pu', 244, 'Actínido')">
+    <td>94</td>
+    <td>Plutonio</td>
+    <td>Pu</td>
+    <td>244</td>
+    <td>Actínido</td>
+  </tr>
+  <tr class="actinido" onclick="mostrarModal('Americio', 'Am', 243, 'Actínido')">
+    <td>95</td>
+    <td>Americio</td>
+    <td>Am</td>
+    <td>243</td>
+    <td>Actínido</td>
+  </tr>
+  <tr class="actinido" onclick="mostrarModal('Curio', 'Cm', 247, 'Actínido')">
+    <td>96</td>
+    <td>Curio</td>
+    <td>Cm</td>
+    <td>247</td>
+    <td>Actínido</td>
+  </tr>
+  <tr class="actinido" onclick="mostrarModal('Berkelio', 'Bk', 247, 'Actínido')">
+    <td>97</td>
+    <td>Berkelio</td>
+    <td>Bk</td>
+    <td>247</td>
+    <td>Actínido</td>
+  </tr>
+  <tr class="actinido" onclick="mostrarModal('Californio', 'Cf', 251, 'Actínido')">
+    <td>98</td>
+    <td>Californio</td>
+    <td>Cf</td>
+    <td>251</td>
+    <td>Actínido</td>
+  </tr>
+  <tr class="actinido" onclick="mostrarModal('Einsteinio', 'Es', 252, 'Actínido')">
+    <td>99</td>
+    <td>Einsteinio</td>
+    <td>Es</td>
+    <td>252</td>
+    <td>Actínido</td>
+  </tr>
+  <tr class="actinido" onclick="mostrarModal('Fermio', 'Fm', 257, 'Actínido')">
+    <td>100</td>
+    <td>Fermio</td>
+    <td>Fm</td>
+    <td>257</td>
+    <td>Actínido</td>
+  </tr>
+  <tr class="actinido" onclick="mostrarModal('Mendelevio', 'Md', 258, 'Actínido')">
+    <td>101</td>
+    <td>Mendelevio</td>
+    <td>Md</td>
+    <td>258</td>
+    <td>Actínido</td>
+  </tr>
+  <tr class="actinido" onclick="mostrarModal('Nobelio', 'No', 259, 'Actínido')">
+    <td>102</td>
+    <td>Nobelio</td>
+    <td>No</td>
+    <td>259</td>
+    <td>Actínido</td>
+  </tr>
+  <tr class="actinido" onclick="mostrarModal('Lawrencio', 'Lr', 262, 'Actínido')">
+    <td>103</td>
+    <td>Lawrencio</td>
+    <td>Lr</td>
+    <td>262</td>
+    <td>Actínido</td>
+  </tr>
+
+  <!-- Metales de transición 104 a 112 (grupo de transactínidos) -->
+  <tr class="metal-transactinido" onclick="mostrarModal('Rutherfordio', 'Rf', 267, 'Metal transactínido')">
+    <td>104</td>
+    <td>Rf</td>
+    <td>Rf</td>
+    <td>267</td>
+    <td>Metal transactínido</td>
+  </tr>
+  <tr class="metal-transactinido" onclick="mostrarModal('Dubnio', 'Db', 268, 'Metal transactínido')">
+    <td>105</td>
+    <td>Db</td>
+    <td>Db</td>
+    <td>268</td>
+    <td>Metal transactínido</td>
+  </tr>
+  <tr class="metal-transactinido" onclick="mostrarModal('Seaborgio', 'Sg', 271, 'Metal transactínido')">
+    <td>106</td>
+    <td>Sg</td>
+    <td>Sg</td>
+    <td>271</td>
+    <td>Metal transactínido</td>
+  </tr>
+  <tr class="metal-transactinido" onclick="mostrarModal('Bohriio', 'Bh', 272, 'Metal transactínido')">
+    <td>107</td>
+    <td>Bh</td>
+    <td>Bh</td>
+    <td>272</td>
+    <td>Metal transactínido</td>
+  </tr>
+  <tr class="metal-transactinido" onclick="mostrarModal('Hassio', 'Hs', 270, 'Metal transactínido')">
+    <td>108</td>
+    <td>Hs</td>
+    <td>Hs</td>
+    <td>270</td>
+    <td>Metal transactínido</td>
+  </tr>
+  <tr class="metal-transactinido" onclick="mostrarModal('Meitnerio', 'Mt', 276, 'Metal transactínido')">
+    <td>109</td>
+    <td>Mt</td>
+    <td>Mt</td>
+    <td>276</td>
+    <td>Metal transactínido</td>
+  </tr>
+  <tr class="metal-transactinido" onclick="mostrarModal('Darmstatio', 'Ds', 281, 'Metal transactínido')">
+    <td>110</td>
+    <td>Ds</td>
+    <td>Ds</td>
+    <td>281</td>
+    <td>Metal transactínido</td>
+  </tr>
+  <tr class="metal-transactinido" onclick="mostrarModal('Roentgenio', 'Rg', 282, 'Metal transactínido')">
+    <td>111</td>
+    <td>Rg</td>
+    <td>Rg</td>
+    <td>282</td>
+    <td>Metal transactínido</td>
+  </tr>
+  <tr class="metal-transactinido" onclick="mostrarModal('Copernicio', 'Cn', 285, 'Metal transactínido')">
+    <td>112</td>
+    <td>Cn</td>
+    <td>Cn</td>
+    <td>285</td>
+    <td>Metal transactínido</td>
+  </tr>
+  <tr class="post-transactinido" onclick="mostrarModal('Nihonio', 'Nh', 286, 'Post-transactínido')">
+    <td>113</td>
+    <td>Nihonio</td>
+    <td>Nh</td>
+    <td>286</td>
+    <td>Post-transactínido</td>
+  </tr>
+  <tr class="post-transactinido" onclick="mostrarModal('Flerovio', 'Fl', 289, 'Post-transactínido')">
+    <td>114</td>
+    <td>Flerovio</td>
+    <td>Fl</td>
+    <td>289</td>
+    <td>Post-transactínido</td>
+  </tr>
+  <tr class="post-transactinido" onclick="mostrarModal('Moscovio', 'Mc', 288, 'Post-transactínido')">
+    <td>115</td>
+    <td>Moscovio</td>
+    <td>Mc</td>
+    <td>288</td>
+    <td>Post-transactínido</td>
+  </tr>
+  <tr class="post-transactinido" onclick="mostrarModal('Livermorio', 'Lv', 293, 'Post-transactínido')">
+    <td>116</td>
+    <td>Livermorio</td>
+    <td>Lv</td>
+    <td>293</td>
+    <td>Post-transactínido</td>
+  </tr>
+  <tr class="post-transactinido" onclick="mostrarModal('Tenesino', 'Ts', 294, 'Post-transactínido')">
+    <td>117</td>
+    <td>Tenesino</td>
+    <td>Ts</td>
+    <td>294</td>
+    <td>Post-transactínido</td>
+  </tr>
+  <tr class="post-transactinido" onclick="mostrarModal('Oganesón', 'Og', 294, 'Post-transactínido')">
+    <td>118</td>
+    <td>Oganesón</td>
+    <td>Og</td>
+    <td>294</td>
+    <td>Post-transactínido</td>
+  </tr>
+</tbody
+</html>
+
+
+
+
+
+
+  <script>
+    function calcular() {
+      const R = 0.0821; // constante universal de los gases (atm·L/mol·K)
+
+      let P = parseFloat(document.getElementById("presion").value);
+      let V = parseFloat(document.getElementById("volumen").value);
+      let n = parseFloat(document.getElementById("mol").value);
+      let T = parseFloat(document.getElementById("temperatura").value);
+
+      let campos = [P, V, n, T];
+      let vacios = campos.filter(x => isNaN(x)).length;
+
+      if (vacios !== 1) {
+        document.getElementById("resultado").innerText = "Por favor, deja una sola incógnita en blanco.";
+        return;
+      }
+
+      if (isNaN(P)) P = (n * R * T) / V;
+      else if (isNaN(V)) V = (n * R * T) / P;
+      else if (isNaN(n)) n = (P * V) / (R * T);
+      else if (isNaN(T)) T = (P * V) / (n * R);
+
+      let resultado = `
+        Presión (P): ${P.toFixed(2)} atm<br>
+        Volumen (V): ${V.toFixed(2)} L<br>
+        Mol (n): ${n.toFixed(2)} mol<br>
+        Temperatura (T): ${T.toFixed(2)} K
+      `;
+
+      document.getElementById("resultado").innerHTML = resultado;
+    }
+
+    function calcularEnergia() {
+      let Q = parseFloat(document.getElementById("calor").value);
+      let W = parseFloat(document.getElementById("trabajo").value);
+
+      if (isNaN(Q) || isNaN(W)) {
+        document.getElementById("resultadoEnergia").innerText = "Por favor, introduce valores válidos para Q y W.";
+        return;
+      }
+
+      let deltaU = Q - W;
+      let resultado = `ΔU (Energía Interna) = ${deltaU.toFixed(2)} J`;
+
+      document.getElementById("resultadoEnergia").innerText = resultado;
+    }
+    function calcularCalorSensible() {
+  let m = parseFloat(document.getElementById("masa").value);
+  let c = parseFloat(document.getElementById("capacidad").value);
+  let Ti = parseFloat(document.getElementById("tempInicial").value);
+  let Tf = parseFloat(document.getElementById("tempFinal").value);
+
+  if (isNaN(m) || isNaN(c) || isNaN(Ti) || isNaN(Tf)) {
+    document.getElementById("resultadoCalor").innerText = "Por favor, introduce todos los valores necesarios.";
+    return;
+  }
+
+  let deltaT = Tf - Ti;
+  let q = m * c * deltaT;
+
+  let resultado = `q = m·c·ΔT = ${m}g · ${c}J/g·K · (${Tf} - ${Ti})K = <strong>${q.toFixed(2)} J</strong>`;
+  document.getElementById("resultadoCalor").innerHTML = resultado;
+}
+function calcularEntalpia() {
+  let productos = parseFloat(document.getElementById("productos").value);
+  let reactivos = parseFloat(document.getElementById("reactivos").value);
+
+  if (isNaN(productos) || isNaN(reactivos)) {
+    document.getElementById("resultadoEntalpia").innerText = "Por favor, introduce los valores de productos y reactivos.";
+    return;
+  }
+
+  let deltaH = productos - reactivos;
+
+  let mensaje = `ΔH = ΣH(productos) - ΣH(reactivos) = ${productos} - ${reactivos} = <strong>${deltaH.toFixed(2)} kJ/mol</strong>`;
+  if (deltaH < 0) {
+    mensaje += " → Reacción exotérmica 🔥";
+  } else if (deltaH > 0) {
+    mensaje += " → Reacción endotérmica ❄️";
+  } else {
+    mensaje += " → Reacción sin cambio neto de entalpía.";
+  }
+
+  document.getElementById("resultadoEntalpia").innerHTML = mensaje;
+}
+function calcularLeyHess() {
+  let h1 = parseFloat(document.getElementById("hess1").value);
+  let h2 = parseFloat(document.getElementById("hess2").value);
+  let h3 = parseFloat(document.getElementById("hess3").value);
+
+  if (isNaN(h1) || isNaN(h2)) {
+    document.getElementById("resultadoHess").innerText = "Por favor, ingresa al menos ΔH₁ y ΔH₂.";
+    return;
+  }
+
+  h3 = isNaN(h3) ? 0 : h3;
+
+  let total = h1 + h2 + h3;
+  let mensaje = `ΔHₜₒₜₐₗ = ${h1} + ${h2}` + (h3 !== 0 ? ` + ${h3}` : '') + ` = <strong>${total.toFixed(2)} kJ/mol</strong>`;
+
+  if (total < 0) {
+    mensaje += " → Reacción exotérmica 🔥";
+  } else if (total > 0) {
+    mensaje += " → Reacción endotérmica ❄️";
+  } else {
+    mensaje += " → Reacción sin cambio neto de entalpía.";
+  }
+
+  document.getElementById("resultadoHess").innerHTML = mensaje;
+}
+function calcularVelocidad() {
+  let k = parseFloat(document.getElementById("constante").value);
+  let A = parseFloat(document.getElementById("concentracionA").value);
+  let m = parseFloat(document.getElementById("ordenA").value);
+  let B = parseFloat(document.getElementById("concentracionB").value);
+  let n = parseFloat(document.getElementById("ordenB").value);
+
+  if ([k, A, m, B, n].some(valor => isNaN(valor))) {
+    document.getElementById("resultadoCinetica").innerText = "Por favor, completa todos los campos.";
+    return;
+  }
+
+  let velocidad = k * Math.pow(A, m) * Math.pow(B, n);
+
+  document.getElementById("resultadoCinetica").innerHTML = 
+    `Velocidad = k · [A]^m · [B]^n = ${k} · (${A})^${m} · (${B})^${n} 
+    = <strong>${velocidad.toExponential(3)} mol/(L·s)</strong>`;
+}
+function calcularEquilibrio() {
+  let producto = parseFloat(document.getElementById("producto").value);
+  let expP = parseFloat(document.getElementById("expProducto").value);
+  let reactivo = parseFloat(document.getElementById("reactivo").value);
+  let expR = parseFloat(document.getElementById("expReactivo").value);
+
+  if ([producto, expP, reactivo, expR].some(v => isNaN(v) || v <= 0)) {
+    document.getElementById("resultadoEquilibrio").innerText = "Por favor, ingresa valores positivos y válidos.";
+    return;
+  }
+
+  let kc = Math.pow(producto, expP) / Math.pow(reactivo, expR);
+  document.getElementById("resultadoEquilibrio").innerHTML = 
+    `K<sub>c</sub> = [producto]^n / [reactivo]^m = (${producto})^${expP} / (${reactivo})^${expR} 
+    = <strong>${kc.toExponential(3)}</strong>`;
+}
+function calcularLeyHess() {
+  let h1 = parseFloat(document.getElementById("hess1").value) || 0;
+  let h2 = parseFloat(document.getElementById("hess2").value) || 0;
+  let h3 = parseFloat(document.getElementById("hess3").value) || 0;
+
+  let resultado = h1 + h2 + h3;
+
+  document.getElementById("resultadoHess").innerHTML = 
+    `ΔH<sub>total</sub> = ΔH₁ + ΔH₂ + ΔH₃ = ${h1} + ${h2} + ${h3} = 
+    <strong>${resultado.toFixed(2)} kJ/mol</strong>`;
+}
+function calcularVelocidad() {
+  let k = parseFloat(document.getElementById("constanteK").value) || 0;
+  let A = parseFloat(document.getElementById("concentracionA").value) || 0;
+  let m = parseFloat(document.getElementById("ordenA").value) || 0;
+  let B = parseFloat(document.getElementById("concentracionB").value) || 0;
+  let n = parseFloat(document.getElementById("ordenB").value) || 0;
+
+  let velocidad = k * Math.pow(A, m) * Math.pow(B, n);
+
+  document.getElementById("resultadoVelocidad").innerHTML = 
+    `La velocidad de la reacción es: <strong>${velocidad.toExponential(3)} mol/L·s</strong>`;
+}
+function calcularGibbs() {
+  let deltaH = parseFloat(document.getElementById("deltaH_gibbs").value) || 0;
+  let deltaS = parseFloat(document.getElementById("deltaS").value) || 0;
+  let T = parseFloat(document.getElementById("temperaturaGibbs").value) || 0;
+
+  let deltaG = deltaH - T * deltaS;
+
+  document.getElementById("resultadoGibbs").innerHTML = 
+    `ΔG = ${deltaH} - (${T} × ${deltaS}) = <strong>${deltaG.toFixed(2)} kJ/mol</strong>`;
+}
+function calcularEntropia() {
+    const Q = parseFloat(document.getElementById("calorInput").value);
+    const T = parseFloat(document.getElementById("tempInput").value);
+
+    if (isNaN(Q) || isNaN(T) || T <= 0) {
+      document.getElementById("resultadoEntropia").innerHTML = "❌ Ingresa valores válidos y temperatura > 0 K.";
+      return;
+    }
+
+    const deltaS = Q / T;
+
+    document.getElementById("resultadoEntropia").innerHTML = `
+      🔥 Cambio de Entropía (ΔS) = ${deltaS.toFixed(4)} J/K
+    `;
+  }
+  function calcularRaoult() {
+  const X = parseFloat(document.getElementById("fraccionSolvente").value);
+  const P0 = parseFloat(document.getElementById("presionSolventePuro").value);
+
+    if (isNaN(X) || isNaN(P0) || X < 0 || X > 1 || P0 < 0) {
+      document.getElementById("resultadoRaoult").innerHTML = "❌ Ingresa valores válidos (X entre 0 y 1, P₀ positivo).";
+      return;
+    }
+    const Pvap = X * P0;
+    document.getElementById("resultadoRaoult").innerHTML = `Presión de vapor: <strong>${Pvap.toFixed(5)} atm</strong>`;
+  }
+  function calcularHenry() {
+    const kH = parseFloat(document.getElementById("constanteHenry").value);
+  const P = parseFloat(document.getElementById("presionGas").value);
+
+  if (isNaN(kH) || isNaN(P) || kH < 0 || P < 0) {
+    document.getElementById("resultadoHenry").innerHTML = "❌ Ingresa valores válidos y positivos.";
+    return;
+  }
+
+  const C = kH * P;
+
+  document.getElementById("resultadoHenry").innerHTML = `💨 Concentración de gas disuelto: ${C.toFixed(5)} mol/L`;
+}
+function calcularArrhenius() {
+  const A = parseFloat(document.getElementById("factorA").value);
+  const Ea = parseFloat(document.getElementById("energiaEa").value);
+  const T = parseFloat(document.getElementById("tempArrhenius").value);
+  const R = 8.314;
+
+  if (isNaN(A) || isNaN(Ea) || isNaN(T) || A < 0 || Ea < 0 || T <= 0) {
+    document.getElementById("resultadoArrhenius").innerHTML = "❌ Ingresa valores válidos (T > 0 K).";
+    return;
+  }
+
+  const k = A * Math.exp(-Ea / (R * T));
+
+  document.getElementById("resultadoArrhenius").innerHTML = `⚡ Constante de velocidad (k): ${k.toExponential(5)}`;
+}
+function calcularEquilibrio() {
+  const K = parseFloat(document.getElementById("constanteAcidoBase").value);
+  const tipo = document.getElementById("tipoConstante").value;
+
+  if (isNaN(K) || K <= 0) {
+    document.getElementById("resultadoEquilibrio").innerHTML = "❌ Ingresa un valor positivo válido.";
+    return;
+  }
+
+  const pK = -Math.log10(K);
+  const Kw = 1e-14;
+  let Kcomplementaria, pKcomplementaria;
+
+  if (tipo === "Ka") {
+    Kcomplementaria = Kw / K;
+    pKcomplementaria = -Math.log10(Kcomplementaria);
+    document.getElementById("resultadoEquilibrio").innerHTML = `
+      🧪 pKa = ${pK.toFixed(4)}<br>
+      pKb = ${pKcomplementaria.toFixed(4)}<br>
+      Kb = ${Kcomplementaria.toExponential(4)}
+    `;
+  } else {
+    Kcomplementaria = Kw / K;
+    pKcomplementaria = -Math.log10(Kcomplementaria);
+    document.getElementById("resultadoEquilibrio").innerHTML = `
+      🧪 pKb = ${pK.toFixed(4)}<br>
+      pKa = ${pKcomplementaria.toFixed(4)}<br>
+      Ka = ${Kcomplementaria.toExponential(4)}
+    `;
+  }
+}
+function calcularPH() {
+  let H = parseFloat(document.getElementById("Hplus").value);
+  let OH = parseFloat(document.getElementById("OHminus").value);
+  let resultado = "";
+
+  if (H) {
+    let pH = -Math.log10(H);
+    let pOH = 14 - pH;
+    resultado += `pH = ${pH.toFixed(2)}, pOH = ${pOH.toFixed(2)}<br>`;
+  }
+  if (OH) {
+    let pOH = -Math.log10(OH);
+    let pH = 14 - pOH;
+    resultado += `pOH = ${pOH.toFixed(2)}, pH = ${pH.toFixed(2)}<br>`;
+  }
+  if (!H && !OH) {
+    resultado = "Por favor ingresa una concentración.";
+  }
+
+  document.getElementById("resultadoPH").innerHTML = resultado;
+}
+
+  if (isNaN(presion)) {
+    document.getElementById("resultadoPresion").innerHTML = "❌ Ingresa un valor válido.";
+    return;
+  }
+
+  let atm, Pa, mmHg, bar;
+
+  switch (unidad) {
+    case "atm":
+      atm = presion;
+      Pa = presion * 101325;
+      mmHg = presion * 760;
+      bar = presion * 1.01325;
+      break;
+    case "Pa":
+      atm = presion / 101325;
+      Pa = presion;
+      mmHg = presion / 133.322;
+      bar = presion / 100000;
+      break;
+    case "mmHg":
+      atm = presion / 760;
+      Pa = presion * 133.322;
+      mmHg = presion;
+      bar = Pa / 100000;
+      break;
+    case "bar":
+      atm = presion / 1.01325;
+      Pa = presion * 100000;
+      mmHg = Pa / 133.322;
+      bar = presion;
+      break;
+  }
+
+  document.getElementById("resultadoPresion").innerHTML = `
+    💨 Resultado:<br>
+    atm: ${atm.toFixed(5)}<br>
+    Pa: ${Pa.toFixed(2)}<br>
+    mmHg: ${mmHg.toFixed(2)}<br>
+    bar: ${bar.toFixed(5)}
+  `;
+
+
+function convertirTemperatura() {
+  const temp = parseFloat(document.getElementById("tempInput").value);
+  const unidad = document.getElementById("tempUnidad").value;
+  let celsius, kelvin, fahrenheit;
+
+  if (isNaN(temp)) {
+    document.getElementById("resultadoTemperatura").innerHTML = "❌ Ingresa un valor válido.";
+    return;
+  }
+
+  switch (unidad) {
+    case "C":
+      celsius = temp;
+      kelvin = temp + 273.15;
+      fahrenheit = (temp * 9/5) + 32;
+      break;
+    case "K":
+      kelvin = temp;
+      celsius = temp - 273.15;
+      fahrenheit = (celsius * 9/5) + 32;
+      break;
+    case "F":
+      fahrenheit = temp;
+      celsius = (temp - 32) * 5/9;
+      kelvin = celsius + 273.15;
+      break;
+  }
+
+  document.getElementById("resultadoTemperatura").innerHTML = `
+    🌡️ Resultado:<br>
+    Celsius: ${celsius.toFixed(2)} °C<br>
+    Kelvin: ${kelvin.toFixed(2)} K<br>
+    Fahrenheit: ${fahrenheit.toFixed(2)} °F
+  `;
+}
+function convertirMasa() {
+  const masa = parseFloat(document.getElementById("masaInput").value);
+  const unidad = document.getElementById("unidadMasa").value;
+
+  if (isNaN(masa)) {
+    document.getElementById("resultadoMasa").innerHTML = "❌ Por favor, ingresa un valor numérico válido.";
+    return;
+  }
+
+  let gramos, kilogramos, miligramos, toneladas;
+
+  switch (unidad) {
+    case "g":
+      gramos = masa;
+      kilogramos = masa / 1000;
+      miligramos = masa * 1000;
+      toneladas = masa / 1e6;
+      break;
+    case "kg":
+      gramos = masa * 1000;
+      kilogramos = masa;
+      miligramos = masa * 1e6;
+      toneladas = masa / 1000;
+      break;
+    case "mg":
+      gramos = masa / 1000;
+      kilogramos = masa / 1e6;
+      miligramos = masa;
+      toneladas = masa / 1e9;
+      break;
+    case "ton":
+      gramos = masa * 1e6;
+      kilogramos = masa * 1000;
+      miligramos = masa * 1e9;
+      toneladas = masa;
+      break;
+    default:
+      document.getElementById("resultadoMasa").innerHTML = "❌ Unidad desconocida.";
+      return;
+  }
+
+  document.getElementById("resultadoMasa").innerHTML = `
+    ⚖️ <em>Conversión completa:</em><br>
+    gramos: ${gramos.toFixed(3)} g<br>
+    kilogramos: ${kilogramos.toFixed(6)} kg<br>
+    miligramos: ${miligramos.toFixed(0)} mg<br>
+    toneladas: ${toneladas.toExponential(6)} t
+  `;
+}
+function convertirLongitud() {
+  const valor = parseFloat(document.getElementById("longitudInput").value);
+  const unidad = document.getElementById("unidadLongitud").value;
+
+  if (isNaN(valor)) {
+    document.getElementById("resultadoLongitud").innerHTML = "❌ Por favor, ingresa un valor numérico válido.";
+    return;
+  }
+
+  let mm, cm, m, km;
+
+  switch (unidad) {
+    case "mm":
+      mm = valor;
+      cm = valor / 10;
+      m = valor / 1000;
+      km = valor / 1e6;
+      break;
+    case "cm":
+      mm = valor * 10;
+      cm = valor;
+      m = valor / 100;
+      km = valor / 100000;
+      break;
+    case "m":
+      mm = valor * 1000;
+      cm = valor * 100;
+      m = valor;
+      km = valor / 1000;
+      break;
+    case "km":
+      mm = valor * 1e6;
+      cm = valor * 100000;
+      m = valor * 1000;
+      km = valor;
+      break;
+    default:
+      document.getElementById("resultadoLongitud").innerHTML = "❌ Unidad desconocida.";
+      return;
+  }
+
+  document.getElementById("resultadoLongitud").innerHTML = `
+    📏 <em>Conversión completa:</em><br>
+    milímetros: ${mm.toFixed(2)} mm<br>
+    centímetros: ${cm.toFixed(2)} cm<br>
+    metros: ${m.toFixed(5)} m<br>
+    kilómetros: ${km.toFixed(6)} km
+  `;
+}
+function convertirFuerza() {
+  const valor = parseFloat(document.getElementById("fuerzaInput").value);
+  const unidad = document.getElementById("unidadFuerza").value;
+
+  if (isNaN(valor)) {
+    document.getElementById("resultadoFuerza").innerHTML = "❌ Por favor, ingresa un valor válido.";
+    return;
+  }
+
+  let N, dyn, kgf, lbf;
+
+  switch (unidad) {
+    case "N":
+      N = valor;
+      dyn = valor * 1e5;
+      kgf = valor / 9.80665;
+      lbf = valor / 4.44822;
+      break;
+    case "dyn":
+      N = valor / 1e5;
+      dyn = valor;
+      kgf = N / 9.80665;
+      lbf = N / 4.44822;
+      break;
+    case "kgf":
+      N = valor * 9.80665;
+      dyn = N * 1e5;
+      kgf = valor;
+      lbf = N / 4.44822;
+      break;
+    case "lbf":
+      N = valor * 4.44822;
+      dyn = N * 1e5;
+      kgf = N / 9.80665;
+      lbf = valor;
+      break;
+    default:
+      document.getElementById("resultadoFuerza").innerHTML = "❌ Unidad desconocida.";
+      return;
+  }
+
+  document.getElementById("resultadoFuerza").innerHTML = `
+    💪 <em>Conversión completa:</em><br>
+    Newtons: ${N.toFixed(5)} N<br>
+    Dynes: ${dyn.toExponential(2)} dyn<br>
+    Kilogramo-fuerza: ${kgf.toFixed(6)} kgf<br>
+    Libra-fuerza: ${lbf.toFixed(6)} lbf
+  `;
+}
+function convertirEnergia() {
+  const valor = parseFloat(document.getElementById("energiaInput").value);
+  const unidad = document.getElementById("unidadEnergia").value;
+
+  if (isNaN(valor)) {
+    document.getElementById("resultadoEnergia").innerHTML = "❌ Por favor, ingresa un valor válido.";
+    return;
+  }
+
+  let J, kJ, cal, kcal, BTU, eV;
+
+  switch (unidad) {
+    case "J":
+      J = valor;
+      break;
+    case "kJ":
+      J = valor * 1000;
+      break;
+    case "cal":
+      J = valor * 4.184;
+      break;
+    case "kcal":
+      J = valor * 4184;
+      break;
+    case "BTU":
+      J = valor * 1055.06;
+      break;
+    case "eV":
+      J = valor * 1.60218e-19;
+      break;
+    default:
+      document.getElementById("resultadoEnergia").innerHTML = "❌ Unidad desconocida.";
+      return;
+  }
+
+  kJ = J / 1000;
+  cal = J / 4.184;
+  kcal = J / 4184;
+  BTU = J / 1055.06;
+  eV = J / 1.60218e-19;
+
+  document.getElementById("resultadoEnergia").innerHTML = `
+    🔥 <em>Conversión completa:</em><br>
+    Joules (J): ${J.toExponential(5)}<br>
+    Kilojoules (kJ): ${kJ.toFixed(5)}<br>
+    Calorías (cal): ${cal.toFixed(5)}<br>
+    Kilocalorías (kcal): ${kcal.toFixed(5)}<br>
+    BTU: ${BTU.toFixed(5)}<br>
+    eV: ${eV.toExponential(3)} eV
+  `;
+}
+function convertirMoles() {
+  const valor = parseFloat(document.getElementById("molInput").value);
+  const unidad = document.getElementById("unidadMol").value;
+
+  if (isNaN(valor)) {
+    document.getElementById("resultadoMol").innerHTML = "❌ Por favor, ingresa un valor válido.";
+    return;
+  }
+
+  const NA = 6.02214076e23; // Número de Avogadro
+  let mol;
+
+  switch (unidad) {
+    case "mol":
+      mol = valor;
+      break;
+    case "mmol":
+      mol = valor / 1000;
+      break;
+    case "umol":
+      mol = valor / 1e6;
+      break;
+    case "nmol":
+      mol = valor / 1e9;
+      break;
+    case "particulas":
+      mol = valor / NA;
+      break;
+    default:
+      document.getElementById("resultadoMol").innerHTML = "❌ Unidad desconocida.";
+      return;
+  }
+
+  const mmol = mol * 1e3;
+  const umol = mol * 1e6;
+  const nmol = mol * 1e9;
+  const particulas = mol * NA;
+
+  document.getElementById("resultadoMol").innerHTML = `
+    🧪 <em>Conversión completa:</em><br>
+    Mol: ${mol.toExponential(6)} mol<br>
+    Milimol: ${mmol.toFixed(4)} mmol<br>
+    Micromol: ${umol.toFixed(4)} µmol<br>
+    Nanomol: ${nmol.toFixed(4)} nmol<br>
+    Partículas: ${particulas.toExponential(6)} moléculas/átomos
+  `;
+}
+function convertirVolumen() {
+  const valor = parseFloat(document.getElementById("volumenInput").value);
+  const unidad = document.getElementById("unidadVolumen").value;
+
+  if (isNaN(valor)) {
+    document.getElementById("resultadoVolumen").innerHTML = "❌ Por favor, ingresa un valor válido.";
+    return;
+  }
+
+  let litros;
+
+  switch (unidad) {
+    case "L":
+      litros = valor;
+      break;
+    case "mL":
+      litros = valor / 1000;
+      break;
+    case "cm3":
+      litros = valor / 1000;
+      break;
+    case "m3":
+      litros = valor * 1000;
+      break;
+    case "ft3":
+      litros = valor * 28.3168;
+      break;
+    case "gal":
+      litros = valor * 3.78541;
+      break;
+    default:
+      document.getElementById("resultadoVolumen").innerHTML = "❌ Unidad desconocida.";
+      return;
+  }
+
+  const mL = litros * 1000;
+  const cm3 = litros * 1000;
+  const m3 = litros / 1000;
+  const ft3 = litros / 28.3168;
+  const gal = litros / 3.78541;
+
+  document.getElementById("resultadoVolumen").innerHTML = `
+    🧊 <em>Conversión completa:</em><br>
+    Litros: ${litros.toFixed(5)} L<br>
+    Mililitros: ${mL.toFixed(2)} mL<br>
+    Centímetros cúbicos: ${cm3.toFixed(2)} cm³<br>
+    Metros cúbicos: ${m3.toExponential(4)} m³<br>
+    Pies cúbicos: ${ft3.toFixed(5)} ft³<br>
+    Galones (US): ${gal.toFixed(5)} gal
+  `;
+}
+function convertirPotencia() {
+  const valor = parseFloat(document.getElementById("potenciaInput").value);
+  const unidad = document.getElementById("unidadPotencia").value;
+
+  if (isNaN(valor)) {
+    document.getElementById("resultadoPotencia").innerHTML = "❌ Por favor, ingresa un valor válido.";
+    return;
+  }
+
+  let watts;
+
+  switch (unidad) {
+    case "W":
+      watts = valor;
+      break;
+    case "kW":
+      watts = valor * 1000;
+      break;
+    case "hp":
+      watts = valor * 745.699872;
+      break;
+    case "cal_s":
+      watts = valor * 4.184;
+      break;
+    case "BTU_h":
+      watts = valor * 0.29307107;
+      break;
+    default:
+      document.getElementById("resultadoPotencia").innerHTML = "❌ Unidad desconocida.";
+      return;
+  }
+
+  const kW = watts / 1000;
+  const hp = watts / 745.699872;
+  const cal_s = watts / 4.184;
+  const BTU_h = watts / 0.29307107;
+
+  document.getElementById("resultadoPotencia").innerHTML = `
+    ⚙️ <em>Conversión completa:</em><br>
+    Watts: ${watts.toFixed(5)} W<br>
+    Kilowatts: ${kW.toFixed(5)} kW<br>
+    Caballos de fuerza: ${hp.toFixed(5)} hp<br>
+    Calorías por segundo: ${cal_s.toFixed(5)} cal/s<br>
+    BTU/hora: ${BTU_h.toFixed(5)} BTU/h
+  `;
+}
+function convertirGravedad() {
+  const valor = parseFloat(document.getElementById("valorGravedad").value);
+  const tipo = document.getElementById("tipoConversion").value;
+  const planeta = document.getElementById("planetaSeleccionado").value;
+
+  if (isNaN(valor)) {
+    document.getElementById("resultadoGravedad").innerHTML = "❌ Ingresa un valor válido.";
+    return;
+  }
+
+  const gravedades = {
+    tierra: 9.80665,
+    luna: 1.62,
+    marte: 3.71,
+    jupiter: 24.79
+  };
+
+  const g = gravedades[planeta];
+  let resultado;
+
+  if (tipo === "masa") {
+    resultado = valor * g;
+    document.getElementById("resultadoGravedad").innerHTML = `
+      ⚖️ Peso en ${planeta.charAt(0).toUpperCase() + planeta.slice(1)}: ${resultado.toFixed(5)} N
+    `;
+  } else {
+    resultado = valor / g;
+    document.getElementById("resultadoGravedad").innerHTML = `
+      🧬 Masa en ${planeta.charAt(0).toUpperCase() + planeta.slice(1)}: ${resultado.toFixed(5)} kg
+    `;
+  }
+}
+function convertirDensidad() {
+  const valor = parseFloat(document.getElementById("densidadValor").value);
+  const origen = document.getElementById("densidadOrigen").value;
+  const destino = document.getElementById("densidadDestino").value;
+  if (isNaN(valor)) return;
+
+  // Conversiones a kg/m³
+  let enKgM3;
+  if (origen === "g/cm3") enKgM3 = valor * 1000;
+  else if (origen === "lb/gal") enKgM3 = valor * 119.826;
+  else enKgM3 = valor;
+
+  // Conversiones desde kg/m³
+  let resultado;
+  if (destino === "g/cm3") resultado = enKgM3 / 1000;
+  else if (destino === "lb/gal") resultado = enKgM3 / 119.826;
+  else resultado = enKgM3;
+
+  document.getElementById("resultadoDensidad").innerHTML = `🧪 Resultado: ${resultado.toFixed(5)} ${destino}`;
+}
+function convertirViscosidad() {
+  const valor = parseFloat(document.getElementById("viscoValor").value);
+  const origen = document.getElementById("viscoOrigen").value;
+  const destino = document.getElementById("viscoDestino").value;
+
+  if (isNaN(valor)) return;
+
+  let resultado;
+  if (origen === "Pa·s" && destino === "cP") resultado = valor * 1000;
+  else if (origen === "cP" && destino === "Pa·s") resultado = valor / 1000;
+  else resultado = valor;
+
+  document.getElementById("resultadoViscosidad").innerHTML = `💧 Resultado: ${resultado.toFixed(4)} ${destino}`;
+}
+function convertirConcentracion() {
+  const valor = parseFloat(document.getElementById("concValor").value);
+  const origen = document.getElementById("concOrigen").value;
+  const destino = document.getElementById("concDestino").value;
+
+  if (isNaN(valor)) return;
+
+  let enPPM;
+  if (origen === "mol/L") enPPM = valor * 1000 * 18;  // Asumiendo masa molar del agua = 18 g/mol
+  else if (origen === "%masa") enPPM = valor * 10000;
+  else enPPM = valor;
+
+  let resultado;
+  if (destino === "mol/L") resultado = enPPM / (1000 * 18);
+  else if (destino === "%masa") resultado = enPPM / 10000;
+  else resultado = enPPM;
+
+  document.getElementById("resultadoConcentracion").innerHTML = `🧪 Resultado: ${resultado.toExponential(4)} ${destino}`;
+}
+function convertirFrecuencia() {
+  const valor = parseFloat(document.getElementById("frecValor").value);
+  const origen = document.getElementById("frecOrigen").value;
+  const destino = document.getElementById("frecDestino").value;
+
+  if (isNaN(valor)) return;
+
+  let enHz;
+  if (origen === "kHz") enHz = valor * 1000;
+  else if (origen === "rad/s") enHz = valor / (2 * Math.PI);
+  else enHz = valor;
+
+  let resultado;
+  if (destino === "kHz") resultado = enHz / 1000;
+  else if (destino === "rad/s") resultado = enHz * 2 * Math.PI;
+  else resultado = enHz;
+
+  document.getElementById("resultadoFrecuencia").innerHTML = `🔁 Resultado: ${resultado.toFixed(5)} ${destino}`;
+
+  </script>
+</body>
+</html>
+}                             
+</script>
+</body>
+</html>
